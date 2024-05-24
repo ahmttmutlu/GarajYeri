@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GarajYeri.Web", "GarajYeri.Web\GarajYeri.Web.csproj", "{D2C78A72-3DDE-43B5-A611-D2835E5A0983}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GarajYeri.Web", "GarajYeri.Web\GarajYeri.Web.csproj", "{D2C78A72-3DDE-43B5-A611-D2835E5A0983}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GarajYeri.Models", "GarajYeri.Models\GarajYeri.Models.csproj", "{824D6ADE-0EA3-461D-A94C-18D43AEFCF61}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GarajYeri.Models", "GarajYeri.Models\GarajYeri.Models.csproj", "{824D6ADE-0EA3-461D-A94C-18D43AEFCF61}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GarajYeri.Data", "GarajYeri.Data\GarajYeri.Data.csproj", "{154D03BC-D9FB-4100-ACFB-3E0779E7FA32}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{824D6ADE-0EA3-461D-A94C-18D43AEFCF61}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{824D6ADE-0EA3-461D-A94C-18D43AEFCF61}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{824D6ADE-0EA3-461D-A94C-18D43AEFCF61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{154D03BC-D9FB-4100-ACFB-3E0779E7FA32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{154D03BC-D9FB-4100-ACFB-3E0779E7FA32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{154D03BC-D9FB-4100-ACFB-3E0779E7FA32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{154D03BC-D9FB-4100-ACFB-3E0779E7FA32}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
