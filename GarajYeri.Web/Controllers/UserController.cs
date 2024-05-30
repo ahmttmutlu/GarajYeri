@@ -39,7 +39,7 @@ namespace GarajYeri.Web.Controllers
         }
         public IActionResult GetAll()
         {
-            return Json(new { data = _context.Users.Where(u=>!u.IsDeleted).ToList() });
+            return Json(new { data = _context.Users.Where(u => !u.IsDeleted).ToList() });
         }
 
 
@@ -71,11 +71,18 @@ namespace GarajYeri.Web.Controllers
             return Ok();
         }
         [HttpPost]
-        public IActionResult Update(AppUser appUser) {
+        public IActionResult Update(AppUser appUser)
+        {
             _context.Users.Update(appUser);
             _context.SaveChanges();
             return Ok(appUser);
         }
+        [HttpPost]
+        public IActionResult GetById(int id)
+        {
+            return Ok(_context.Users.Find(id));
+        }
+
 
     }
 }
