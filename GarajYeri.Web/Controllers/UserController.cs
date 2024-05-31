@@ -37,6 +37,12 @@ namespace GarajYeri.Web.Controllers
             return View();
 
         }
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            return RedirectToAction("Login");
+        }
         public IActionResult GetAll()
         {
             return Json(new { data = _context.Users.Where(u => !u.IsDeleted).ToList() });
