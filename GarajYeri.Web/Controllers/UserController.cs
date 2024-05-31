@@ -72,6 +72,7 @@ namespace GarajYeri.Web.Controllers
         {
             AppUser appUser = _context.Users.Find(id);
             appUser.IsDeleted = true;
+            appUser.DateDeleted = DateTime.Now;
             _context.Users.Update(appUser);
             _context.SaveChanges();
             return Ok();

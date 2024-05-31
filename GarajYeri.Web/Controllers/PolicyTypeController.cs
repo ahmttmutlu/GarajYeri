@@ -50,6 +50,7 @@ namespace GarajYeri.Web.Controllers
             if (policyType != null)
             {
                 policyType.IsDeleted = true;
+                policyType.DateDeleted = DateTime.Now;
 
                 _context.PoliciesTypes.Update(policyType);
 
