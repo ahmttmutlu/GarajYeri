@@ -1,5 +1,5 @@
-﻿@using System.Security.Claims
-﻿
+﻿﻿@using System.Security.Claims
+
 <!doctype html>
 <html lang="en">
 
@@ -170,7 +170,7 @@
                         {
                             <li>
                                 <a asp-action="Index" asp-controller="User">
-                                    <i class="uil-home-alt"></i><span class="badge rounded-pill bg-primary float-end">01</span>
+                                    <i class="uil-home-alt"></i>
                                     <span>Kullanıcılar</span>
                                 </a>
                             </li>
@@ -181,16 +181,20 @@
                                     <span>Tanımlamalar</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="true">
+                                    <li><a asp-controller="PolicyType" asp-action="Index">Poliçe Tipleri</a></li>
 
-
-
-                                    <li><a asp-action="Index" asp-controller="PolicyType">Poliçe Tipleri</a></li>
-                                    <li><a asp-action="Index" asp-controller="VehicleType">Araç Tipleri</a></li>
-                                    <li><a asp-action="Index" asp-controller="VehicleProcessType">İşlem Tipleri</a></li>
+                                    <li><a asp-controller="VehicleType" asp-action="Index">Araç Tipleri</a></li>
+                                    <li><a asp-controller="VehicleProcessType" asp-action="Index">İşlem Tipleri</a></li>
 
                                 </ul>
                             </li>
                         }
+                        <li>
+                            <a asp-action="Index" asp-controller="Vehicle">
+                                <i class="uil-home-alt"></i>
+                                <span>Araçlar</span>
+                            </a>
+                        </li>
 
 
 
