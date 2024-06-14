@@ -8,6 +8,7 @@ namespace GarajYeri.Models
 {
     public class VehiclePhoto : BaseModel
     {
+        public string Description { get; set; }
         public string Path { get; set; }//dosya yolu ya da adı 
         public int VehicleId { get; set; }
         public virtual Vehicle Vehicle { get; set; }

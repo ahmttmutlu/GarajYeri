@@ -1,5 +1,8 @@
 ﻿using GarajYeri.Data;
 using GarajYeri.Models;
+using GarajYeri.Repository.Abstract;
+
+using GarajYeri.Repository.Shared.Abstract;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
@@ -9,19 +12,39 @@ namespace GarajYeri.Web.Controllers
 {
     public class UserController : Controller
     {
-        private readonly ApplicationDbContext _context;
-        public UserController(ApplicationDbContext context)
+        private readonly IUserRepository _appUserRepository;
+
+        public UserController(IUserRepository appUserRepository)
         {
-            _context = context;
+            _appUserRepository = appUserRepository;
         }
+
+        public IActionResult Index()
+        {
+
+            return View();
+        }
+
+        public IActionResult GetAll()
+        {
+
+            return Json(new { data = _appUserRepository.GetAll() });
+        }
+
+
+
         public IActionResult Login()
         {
             return View();
         }
+
         [HttpPost]
         public async Task<IActionResult> Login(AppUser appUser)
         {
-            AppUser user = _context.Users.FirstOrDefault(u => u.UserName == appUser.UserName && u.Password == appUser.Password);
+
+            //_userService.Login(appUser);
+
+            AppUser user = _appUserRepository.GetFirstOrDefault(u => u.UserName == appUser.UserName && u.Password == appUser.Password);
             if (user != null)
             {
                 List<Claim> claims = new List<Claim>();
@@ -30,64 +53,53 @@ namespace GarajYeri.Web.Controllers
                 claims.Add(new Claim(ClaimTypes.GivenName, user.FullName));
                 claims.Add(new Claim(ClaimTypes.Role, user.IsAdmin ? "Admin" : "User"));
                 ClaimsIdentity identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
                 await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+
                 await HttpContext.SignInAsync(new ClaimsPrincipal(identity));
+
                 return RedirectToAction("Index", "Vehicle");
             }
             return View();
-
         }
+
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
+
+
+
             return RedirectToAction("Login");
         }
-        public IActionResult GetAll()
-        {
-            return Json(new { data = _context.Users.Where(u => !u.IsDeleted).ToList() });
-        }
 
-
-        public IActionResult Index()
-        {
-            return View();
-        }
         [HttpPost]
         public IActionResult Add(AppUser appUser)
         {
-            _context.Users.Add(appUser);
-            _context.SaveChanges();
-            return Ok(appUser);
+            return Ok(_appUserRepository.Add(appUser));
         }
-        [HttpPost]
-        public IActionResult HardDelete(AppUser appUser)
-        {
-            _context.Users.Remove(appUser);
-            _context.SaveChanges();
-            return Ok();
-        }
+
+
         [HttpPost]
         public IActionResult SoftDelete(int id)
         {
-            AppUser appUser = _context.Users.Find(id);
-            appUser.IsDeleted = true;
-            appUser.DateDeleted = DateTime.Now;
-            _context.Users.Update(appUser);
-            _context.SaveChanges();
-            return Ok();
+
+            return Ok(_appUserRepository.DeleteById(id));
         }
+
         [HttpPost]
         public IActionResult Update(AppUser appUser)
         {
-            _context.Users.Update(appUser);
-            _context.SaveChanges();
-            return Ok(appUser);
+
+            return Ok(_appUserRepository.Update(appUser));
         }
+
         [HttpPost]
         public IActionResult GetById(int id)
         {
-            return Ok(_context.Users.Find(id));
+
+            return Ok(_appUserRepository.GetById(id));
         }
 
 

@@ -1,84 +1,61 @@
 ﻿using GarajYeri.Data;
 using GarajYeri.Models;
+using GarajYeri.Repository.Shared.Abstract;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GarajYeri.Web.Controllers
 {
-    [Authorize(Roles ="Admin")]
+    [Authorize(Roles = "Admin")]
     public class PolicyTypeController : Controller
     {
-        private readonly ApplicationDbContext _context;
 
-        public PolicyTypeController(ApplicationDbContext context)
+        private readonly IRepository<PolicyType> _policyTypeRepository;
+
+        public PolicyTypeController(IRepository<PolicyType> policyTypeRepository)
         {
-            _context = context;
+            _policyTypeRepository = policyTypeRepository;
         }
 
         public IActionResult Index()
         {
             return View();
         }
+
+        [HttpGet]
         public IActionResult GetAll()
         {
-            return Json(new { data = _context.PoliciesTypes.Where(pt => !pt.IsDeleted) });
-        }
-        [HttpPost]
-        public IActionResult GetById(int id) 
-        {
-            return Ok(_context.PoliciesTypes.Find(id));
+            return Json(new { data = _policyTypeRepository.GetAll() });
         }
 
         [HttpPost]
         public IActionResult Add(PolicyType policyType)
         {
-            _context.PoliciesTypes.Add(policyType);
-            _context.SaveChanges();
-            return Ok(policyType);
+            return Ok(_policyTypeRepository.Add(policyType));
         }
+
         [HttpPost]
-        public IActionResult HardDelete(PolicyType policyType)
+        public async Task<IActionResult> SoftDelete(int id)
         {
-            _context.PoliciesTypes.Remove(policyType);
-            _context.SaveChanges();
-            return Ok(policyType);
-        }
-        [HttpPost]
-        public IActionResult SoftDelete(int id)
-        {
-            var policyType = _context.PoliciesTypes.Find(id);
-            if (policyType != null)
-            {
-                policyType.IsDeleted = true;
-                policyType.DateDeleted = DateTime.Now;
 
-                _context.PoliciesTypes.Update(policyType);
-
-                try
-                {
-                    _context.SaveChanges();
-                    return Ok(policyType);
-                }
-                catch (Exception ex)
-                {
-                    // return StatusCode(500, ex.Message);
-                    return BadRequest(ex);
-                }
-
-            }
-            else
-            {
-                return BadRequest("HATA !");
-            }
+            return Ok(_policyTypeRepository.DeleteById(id) is object);
 
         }
+
         [HttpPost]
         public IActionResult Update(PolicyType policyType)
         {
-            _context.PoliciesTypes.Update(policyType);
-            _context.SaveChanges();
-            return Ok(policyType);
+
+            return Ok(_policyTypeRepository.Update(policyType));
         }
+
+        [HttpPost]
+        public IActionResult GetById(int id)
+        {
+            return Ok(_policyTypeRepository.GetById(id));
+        }
+
+
 
     }
 }

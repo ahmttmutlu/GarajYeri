@@ -1,5 +1,9 @@
 
 using GarajYeri.Data;
+using GarajYeri.Repository.Abstract;
+using GarajYeri.Repository.Concrete;
+using GarajYeri.Repository.Shared.Abstract;
+using GarajYeri.Repository.Shared.Concrete;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,6 +12,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IVehicleRepository,VehicleRepository>();
+builder.Services.AddScoped<IVehiclePhotoRepository, VehiclePhotoRepository>();
+
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
 {
     options.AccessDeniedPath = "/User/Login";
