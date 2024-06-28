@@ -1,4 +1,5 @@
-﻿using GarajYeri.Data;
+﻿using GarajYeri.Business.Abstract;
+using GarajYeri.Data;
 using GarajYeri.Models;
 using GarajYeri.Repository.Shared.Abstract;
 using Microsoft.AspNetCore.Authorization;
@@ -10,11 +11,11 @@ namespace GarajYeri.Web.Controllers
     public class PolicyTypeController : Controller
     {
 
-        private readonly IRepository<PolicyType> _policyTypeRepository;
+        private readonly IPolicyTypeService _policyTypeService;
 
-        public PolicyTypeController(IRepository<PolicyType> policyTypeRepository)
+        public PolicyTypeController(IPolicyTypeService policyTypeService)
         {
-            _policyTypeRepository = policyTypeRepository;
+            _policyTypeService = policyTypeService;
         }
 
         public IActionResult Index()
@@ -25,20 +26,20 @@ namespace GarajYeri.Web.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Json(new { data = _policyTypeRepository.GetAll() });
+            return Json(new { data = _policyTypeService.GetAllPolicyType() });
         }
 
         [HttpPost]
         public IActionResult Add(PolicyType policyType)
         {
-            return Ok(_policyTypeRepository.Add(policyType));
+            return Ok(_policyTypeService.Add(policyType));
         }
 
         [HttpPost]
         public async Task<IActionResult> SoftDelete(int id)
         {
 
-            return Ok(_policyTypeRepository.DeleteById(id) is object);
+            return Ok(_policyTypeService.Delete(id));
 
         }
 
@@ -46,16 +47,14 @@ namespace GarajYeri.Web.Controllers
         public IActionResult Update(PolicyType policyType)
         {
 
-            return Ok(_policyTypeRepository.Update(policyType));
+            return Ok(_policyTypeService.Update(policyType));
         }
 
         [HttpPost]
         public IActionResult GetById(int id)
         {
-            return Ok(_policyTypeRepository.GetById(id));
+            return Ok(_policyTypeService.GetById(id));
         }
-
-
 
     }
 }

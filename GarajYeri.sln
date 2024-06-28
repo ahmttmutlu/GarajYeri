@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GarajYeri.Models", "GarajYe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GarajYeri.Data", "GarajYeri.Data\GarajYeri.Data.csproj", "{154D03BC-D9FB-4100-ACFB-3E0779E7FA32}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GarajYeri.Repository", "GarajYeri.Repository\GarajYeri.Repository.csproj", "{57C6FE11-8A83-4130-8262-F6C1EB51BA4C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GarajYeri.Repository", "GarajYeri.Repository\GarajYeri.Repository.csproj", "{57C6FE11-8A83-4130-8262-F6C1EB51BA4C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GarajYeri.Business", "GarajYeri.Business\GarajYeri.Business.csproj", "{DD830746-F7C6-48AE-B2B9-4AD9CBE03655}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{57C6FE11-8A83-4130-8262-F6C1EB51BA4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57C6FE11-8A83-4130-8262-F6C1EB51BA4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57C6FE11-8A83-4130-8262-F6C1EB51BA4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD830746-F7C6-48AE-B2B9-4AD9CBE03655}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD830746-F7C6-48AE-B2B9-4AD9CBE03655}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD830746-F7C6-48AE-B2B9-4AD9CBE03655}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD830746-F7C6-48AE-B2B9-4AD9CBE03655}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

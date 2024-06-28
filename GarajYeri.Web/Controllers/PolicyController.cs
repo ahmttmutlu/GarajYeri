@@ -1,4 +1,5 @@
-﻿using GarajYeri.Models;
+﻿using GarajYeri.Business.Abstract;
+using GarajYeri.Models;
 using GarajYeri.Repository.Shared.Abstract;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,21 +7,45 @@ namespace GarajYeri.Web.Controllers
 {
     public class PolicyController : Controller
     {
-        private readonly IRepository<Policy> _policyRepository;
 
-        public PolicyController(IRepository<Policy> policyRepository)
+        private readonly IPolicyService _policyService;
+
+        public PolicyController(IPolicyService policyService)
         {
-            _policyRepository = policyRepository;
+            _policyService = policyService;
         }
 
         public IActionResult Index()
         {
             return View();
         }
-        //public IActionResult GetAll(Guid id)
-        //{
 
+        public IActionResult GetAllByVehicleGuid(Guid vehicleGuid)
+        {
+            return Json(_policyService.GetAllByVehicleGuid(vehicleGuid));
+        }
 
-        //}
+        [HttpPost]
+        public IActionResult GetAllByUser(AppUser user)
+        {
+
+            return Json(_policyService.GetAllByUser(user));
+        }
+        [HttpPost]
+        public IActionResult Add(Policy policy)
+        {
+            return Ok(_policyService.Add(policy));
+        }
+        [HttpPost]
+        public IActionResult Update(Policy policy)
+        {
+            return Ok(_policyService.Update(policy));
+        }
+        [HttpPost]
+        public IActionResult Delete(int policyId)
+        {
+
+            return Ok(_policyService.Delete(policyId));
+        }
     }
 }

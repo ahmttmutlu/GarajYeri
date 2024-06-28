@@ -1,6 +1,6 @@
-﻿using GarajYeri.Data;
+﻿using GarajYeri.Business.Abstract;
+using GarajYeri.Data;
 using GarajYeri.Models;
-using GarajYeri.Repository.Abstract;
 
 using GarajYeri.Repository.Shared.Abstract;
 using Microsoft.AspNetCore.Authentication;
@@ -12,11 +12,11 @@ namespace GarajYeri.Web.Controllers
 {
     public class UserController : Controller
     {
-        private readonly IUserRepository _appUserRepository;
+        private readonly IUserService _userService;
 
-        public UserController(IUserRepository appUserRepository)
+        public UserController(IUserService userService)
         {
-            _appUserRepository = appUserRepository;
+            _userService = userService;
         }
 
         public IActionResult Index()
@@ -28,7 +28,7 @@ namespace GarajYeri.Web.Controllers
         public IActionResult GetAll()
         {
 
-            return Json(new { data = _appUserRepository.GetAll() });
+            return Json(new { data = _userService.GetAll() });
         }
 
 
@@ -44,7 +44,7 @@ namespace GarajYeri.Web.Controllers
 
             //_userService.Login(appUser);
 
-            AppUser user = _appUserRepository.GetFirstOrDefault(u => u.UserName == appUser.UserName && u.Password == appUser.Password);
+            AppUser user = _userService.CheckLogin(appUser.UserName,appUser.Password);
             if (user != null)
             {
                 List<Claim> claims = new List<Claim>();
@@ -52,6 +52,8 @@ namespace GarajYeri.Web.Controllers
                 claims.Add(new Claim(ClaimTypes.Name, user.UserName));
                 claims.Add(new Claim(ClaimTypes.GivenName, user.FullName));
                 claims.Add(new Claim(ClaimTypes.Role, user.IsAdmin ? "Admin" : "User"));
+                claims.Add(new Claim(ClaimTypes.Hash,user.Guid.ToString()));
+
                 ClaimsIdentity identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
                 await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
@@ -77,7 +79,7 @@ namespace GarajYeri.Web.Controllers
         [HttpPost]
         public IActionResult Add(AppUser appUser)
         {
-            return Ok(_appUserRepository.Add(appUser));
+            return Ok(_userService.Add(appUser));
         }
 
 
@@ -85,21 +87,21 @@ namespace GarajYeri.Web.Controllers
         public IActionResult SoftDelete(int id)
         {
 
-            return Ok(_appUserRepository.DeleteById(id));
+            return Ok(_userService.Delete(id));
         }
 
         [HttpPost]
         public IActionResult Update(AppUser appUser)
         {
 
-            return Ok(_appUserRepository.Update(appUser));
+            return Ok(_userService.Update(appUser));
         }
 
         [HttpPost]
         public IActionResult GetById(int id)
         {
 
-            return Ok(_appUserRepository.GetById(id));
+            return Ok(_userService.GetById(id));
         }
 
 
